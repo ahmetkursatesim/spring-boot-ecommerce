@@ -1,0 +1,49 @@
+
+.ui.container{
+    width: 100%;
+    padding: 1%;
+}
+.ui.buttons.pagination{
+    width: 10%;
+
+}
+.sf-menu{
+    display: inline-grid;
+
+}
+
+.reactEasyCrop_Container{
+    max-width: 250px;
+    max-height: 250px;
+    left: 35% !important;
+    top: 7% !important;
+}
+.crop-container {
+    right: 0;
+    bottom: 80px;
+    max-width: 200px;
+    max-height: 200px;
+}
+
+.col-lg-3{
+    width:200px !important;
+
+}
+.stylish-color-dark {
+    background-color: #d0e2f7 !important;
+}
+.page-footer {
+    bottom: 0;
+    color: #fff;
+}
+#modal {
+    position:  fixed;
+    width: 600px;
+    top: 40px;
+    left: calc(50% - 300px);
+    bottom: 40px;
+    z-index: 100;
+}
+.ui.active.modal{
+    position: relative !important;
+}
