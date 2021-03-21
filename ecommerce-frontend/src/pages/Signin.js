@@ -36,14 +36,22 @@ export default function Signin() {
     };
     addUser(user);
   };
+  function rootHeight(){
+    var e = document.getElementById("root");
+    var t = document.getElementById("backgroundImageTemp");
+    if(e.clientHeight>0){
+      t.style.height=e.clientHeight-15+"px";
+    }
 
+  }
+  rootHeight()
   const view = user ? (
     <Redirect to="/" />
   ) : (
       <div  style={{width:"100%",marginTop:"150px"}}>
         <Card fluid>
           <Card.Content>
-            <Header textAlign="center">Drug Store Hoşgeldiniz</Header>
+            <Header textAlign="center">CanTürk Kuruyemişe Hoşgeldiniz</Header>
             <Form onSubmit={handleSubmit}>
               <Form.Input
                   name="name"

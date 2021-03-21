@@ -1,20 +1,15 @@
 import React, { useContext } from "react";
 import { Card, Image, Header, Label, Grid } from "semantic-ui-react";
-
-import Detail from "../components/detailProduct";
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
-import BarChartIcon from '@material-ui/icons/BarChart';
 import Context from "../config/context";
-import {IconButton} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
-import {useAlert} from "react-alert";
 import {store} from "react-notifications-component";
-
-
+import "./sepet.css"
 export default function Product(props) {
   const context = useContext(Context);
   const {addCart,addWishList } = context;
+    const colorBtn={
+        backgroundColor:"#66a7fd"
+    }
   function handleShoppingCart(productRow){
       let countItemsCart=0
       addCart(productRow)
@@ -63,36 +58,42 @@ export default function Product(props) {
   const pic = props.product.picture1 ? props.product.picture1 : "https://react.semantic-ui.com/images/avatar/large/matthew.png";
 
   return (
-          <Card>
+          <Card >
               <div className="swiper-slide swiper-slide-active" >
                   <div className="product-thumb transition  options " style={{display:"flex",justifyContent:"center"}}>
-                      <Image src={pic}   style={{display:"flex",justifyContent:"center",width:300,height:300,borderRadius:150}}/>
+                      <Image src={pic}  href={"/ProductDetail?id="+props.product.id}   style={{display:"flex",justifyContent:"center",width:280,height:280,marginTop:"25px",marginBottom:"25px",borderRadius:"10px"}}/>
                   </div>
-                  <div style={{float:"left",display:"inline-block"}}>
-                      <Card.Content>
-                          <Card.Header style={{marginLeft:"1%",float:"left",marginRight:"1%"}}>
-                              <Header floated="left" color="teal">
+                  <div >
+                      <div className="showcase-content">
+                          <div className="showcase-title" style={{
+                              marginTop: "10px",
+                              marginBottom: "10px",
+                              display: "flex",
+                              justifyContent: "center"
+                          }}>
+                              <Header>
                                   {props.product.price}TL
                               </Header>
-                          </Card.Header>
-                          <Card.Description style={{marginLeft:"1%",width:"200px"}}>{props.product.name}</Card.Description>
-                      </Card.Content>
+                          </div>
+                          <div style={{
+                              marginTop: "10px",
+                              marginBottom: "10px",
+                              display: "flex",
+                              justifyContent: "center"
+                          }}>
+                              {props.product.name}
+                          </div>
+                          <div className="showcase">
+                          <div className="showcase-buttons">
+                              <Button class="showcase-add-to-cart" onClick={() => {
+                                  handleShoppingCart(props.product)
+                              }}>
+                                  Sepete Ekle
+                              </Button>
+                          </div>
 
-                  </div>
-                  <div  style={{display:"flex",justifyContent:"flex-end",marginRight:"1%",marginBottom:"1%"}}>
-                      <Detail product={props.product}/>
-                          <IconButton style={{backgroundColor:"#66a7fd",marginLeft:"1%"}} onClick={() => {handleShoppingCart(props.product)}} >
-                              <ShoppingCartIcon/>
-                          </IconButton>
-
-                      <IconButton style={{backgroundColor:"#66a7fd",marginLeft:"1%"}}  onClick={() => {HandleWishList(props.product)}}>
-                          <FavoriteBorderIcon/>
-
-                      </IconButton>
-
-                      <IconButton style={{backgroundColor:"#66a7fd",marginLeft:"1%"}}>
-                          <BarChartIcon/>
-                      </IconButton>
+                          </div>
+                      </div>
                   </div>
 
               </div>

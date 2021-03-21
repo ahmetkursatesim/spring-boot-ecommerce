@@ -14,6 +14,8 @@ import ImgDialog from './Image/ImgDialog'
 
 import { getCroppedImg, getRotatedImage } from './Image/canvasUtils'
 import "../main.css"
+import Select from "react-select";
+import UpdateIcon from "@material-ui/icons/Update";
 function readFile(file) {
   return new Promise(resolve => {
     const reader = new FileReader()
@@ -30,7 +32,6 @@ export default function AddProductForm() {
     '6': 90,
     '8': -90,
   }
-  debugger;
   const [imageSrc, setImageSrc] = React.useState(null)
   const [crop, setCrop] = useState({ x: 0, y: 0 })
   const [rotation, setRotation] = useState(0)
@@ -74,6 +75,7 @@ export default function AddProductForm() {
     text: category.name,
     value: category.id
   }));
+
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
@@ -87,45 +89,36 @@ export default function AddProductForm() {
   const handleChange4 = (e, { value }) => setPrice({ value });
   const handleChangePiece = (e, { value }) => setPiece({ value });
   const handleChangeManufacturer = (e, { value }) => setManufacturer({ value });
+
   const HandleSubmit = async () => {
     const pictures = [picture1.value];
     await CroppedImagess();
   };
   async function CroppedImagess() {
-    const croppedImage= await getCroppedImg(imageSrc, croppedAreaPixels, rotation)
-    let promiseUploadFile=new Promise(function(myResolve, myReject) {
-      let myUploadResult= uploadFile(croppedImage)
-      myResolve(myUploadResult)
-    });
-    let result=await promiseUploadFile
-    let pathImage=""
-    if (result !==""){
-       pathImage=result.data
-      console.log("sdsdsd")
-    }
-      let addProductPromise=new Promise(function(myResolve, myReject) {
+        const croppedImage = await getCroppedImg(imageSrc, croppedAreaPixels, rotation)
+        let addProductPromise=new Promise(function(myResolve, myReject) {
+        var categoryP = categories.filter(function(item){
+          return item.id==category.value;
+        });
         const product = {
           name: name.value,
           description: description.value,
-          category_id: parseInt(category.value),
+          category:categoryP[0],
           price: parseFloat(price.value),
           piece: parseInt(piece.value),
           manufacturer_name:manufacturer.value,
           p_code:"",
           created_user_Id:user.id,
           updated_user_Id:user.id,
-          picture1: process.env.PUBLIC_URL + '/generalfileStorage/'+ pathImage,
+          picture1: "tt",
         };
-        debugger;
-        let ad= addProduct(product);
+        let ad= addProduct(croppedImage,product);
         myResolve(ad)
       });
       let result2= await addProductPromise
-
-
   }
   return (
-    <Modal
+    <Modal style={{height:window.innerHeight*0.75,overflowY:"scroll"}}
       trigger={
         <div style={styledisp}>
           <IconButton style={colorBtn} >
@@ -210,7 +203,7 @@ export default function AddProductForm() {
             <Form.Group widths="equal">
               <Form.Input
                   name="piece"
-                  label="Adeti"
+                  label="Adet veya Miktar"
                   placeholder="adt."
                   onChange={handleChangePiece}
                   value={piece.value}
@@ -225,6 +218,9 @@ export default function AddProductForm() {
                   value={manufacturer.value}
               />
             </Form.Group>
+
+
+
             <Button primary fluid  onClick={async () => {await HandleSubmit} }> Save </Button>
           </Form>
         </div>

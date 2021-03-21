@@ -7,10 +7,10 @@ import Popper from '@material-ui/core/Popper';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import { makeStyles } from '@material-ui/core/styles';
-import PersonIcon from '@material-ui/icons/Person';
 import {Menu} from "semantic-ui-react";
 import {Link} from "react-router-dom";
 import {store} from "react-notifications-component";
+import AccountCircleOutlinedIcon from "@material-ui/icons/AccountCircleOutlined";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -20,7 +20,6 @@ const useStyles = makeStyles((theme) => ({
         marginRight: theme.spacing(2),
     },
 }));
-
 export default function AccountMenu() {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
@@ -86,9 +85,9 @@ export default function AccountMenu() {
 
     return (
         <div className={classes.root}>
-            <div><Button ref={anchorRef} aria-controls={open ? 'menu-list-grow' : undefined} aria-haspopup="true" onClick={handleToggle}>
-               <PersonIcon style={{fontSize:"2.5rem",color:"#66a7fd"}}/>
-                </Button>
+            <div>
+
+               <AccountCircleOutlinedIcon style={{fontSize:"4rem",marginRight:"50px"}} ref={anchorRef} aria-controls={open ? 'menu-list-grow' : undefined} aria-haspopup="true" onClick={handleToggle}/>
                 <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
                     {({ TransitionProps, placement }) => (
                         <Grow

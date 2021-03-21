@@ -116,10 +116,18 @@ export default function Orders() {
         }
 
     }
+    function rootHeight(){
+        var e = document.getElementById("root");
+        var t = document.getElementById("backgroundImageTemp");
+        if(e.clientHeight>0){
+            t.style.height=e.clientHeight-15+"px";
+        }
 
+    }
+    rootHeight()
     return (
 
-        <div style={{width:"100%",marginTop:"50px",minHeight:"550px"}}>
+        <div style={{width:"100%",marginTop:"200px",minHeight:"900px"}}>
             <TableContainer component={Paper} >
                 <Table  aria-label="customized table" >
                     <TableHead>

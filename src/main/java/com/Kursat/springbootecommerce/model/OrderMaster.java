@@ -4,6 +4,9 @@ import com.Kursat.springbootecommerce.Enums.Order_Status;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+
+
+
 @Entity
 public class OrderMaster {
 

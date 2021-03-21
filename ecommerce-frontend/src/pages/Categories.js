@@ -1,3 +1,4 @@
+/*
 import React, { useContext, useState, useEffect } from "react";
 
 import { Grid, Segment, Card } from "semantic-ui-react";
@@ -71,3 +72,4 @@ export default function Categories() {
     </div>
   );
 }
+*/

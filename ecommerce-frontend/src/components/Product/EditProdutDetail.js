@@ -29,6 +29,7 @@ export default function Detail(props) {
         '8': -90,
     }
     const [imageSrc, setImageSrc] = React.useState(null)
+
     const [crop, setCrop] = useState({ x: 0, y: 0 })
     const [rotation, setRotation] = useState(0)
     const [zoom, setZoom] = useState(1)
@@ -81,51 +82,42 @@ export default function Detail(props) {
     const handleEditPrice = (e, { value }) => setPrice({ value });
     const handleEditPiece = (e, { value }) => setPiece({ value });
     const handleEditManufacturer = (e, { value }) => setManufacturer({ value });
+
     const HandleSubmit = async () => {
         const pictures = [picture1.value];
         await CroppedImagess();
     };
     async function CroppedImagess() {
         const croppedImage= await getCroppedImg(imageSrc, croppedAreaPixels, rotation)
-        let promiseUploadFile=new Promise(function(myResolve, myReject) {
-            let myUploadResult= uploadFile(croppedImage)
-            myResolve(myUploadResult)
-        });
-        let result=await promiseUploadFile
-        let pathImage=""
-        if (result !==""){
-            pathImage=result.data
-            console.log("sdsdsd")
-        }
         let addProductPromise=new Promise(function(myResolve, myReject) {
+
+            var categoryP = categories.filter(function(item){
+                return item.id==category.value;
+            });
             const product = {
                 id:props.product.id,
                 name: name.value,
                 description: description.value,
-                category_id: parseInt(category.value),
+                category: categoryP[0],
                 price: parseFloat(price.value),
                 piece: parseInt(piece.value),
                 manufacturer_name:manufacturer.value,
                 p_code:"",
                 created_user_Id:user.id,
                 updated_user_Id:user.id,
-                picture1: process.env.PUBLIC_URL + '/generalfileStorage/'+ pathImage,
+                picture1: "ttt",
             };
-            debugger;
-            let ad= editProduct(product);
+            let ad= editProduct(product,croppedImage);
             myResolve(ad)
         });
         let result2= await addProductPromise
 
-
     }
     return (
-        <Modal trigger={
+        <Modal style={{height:window.innerHeight*0.75,overflowY:"scroll"}} trigger={
                 <IconButton style={{backgroundColor:"#66a7fd",marginLeft:5}}>
                     <EditIcon/>
                 </IconButton>
-
-
         }>
             <Modal.Header>Edit Product</Modal.Header>
             <Modal.Content>

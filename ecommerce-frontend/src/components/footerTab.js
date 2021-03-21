@@ -3,73 +3,44 @@ import { MDBCol, MDBContainer, MDBRow, MDBFooter } from "mdbreact";
 
 const FooterPagePro = () => {
     return (
-        <MDBFooter color="stylish-color-dark" className="page-footer font-small pt-4 mt-4" style={{backgroundColor:"#3e4551 !important"}}>
+        <MDBFooter color="stylish-color-dark" className="page-footer font-small pt-4 mt-4" style={{backgroundColor:"black !important"}}>
             <MDBContainer fluid className="text-center text-md-left">
                 <MDBRow>
                     <MDBCol md="6">
-                        <h5 className="text-uppercase mb-4 mt-3 font-weight-bold">
-                            Birsen Eczanesi
+                        <h5 className="text-uppercase mb-4 mt-3 font-weight-bold" style={{color:"#fff"}}>
+                            Cantürk Kuruyemiş
                         </h5>
-                        <p style={{color:"#000"}}>
-                            Birsen Eczanesi
+                        <p style={{color:"#fff"}}>
+                            Cantürk Kuruyemiş
                         </p>
                         <br/>
-                        <p style={{color:"#000"}}>
-                            Adres: Aşağı Eğlence Mh, Altınoluk Sk. No:4/b, 06010 Keçiören/Ankara
+                        <p style={{color:"#fff"}}>
+                            Adres: Yayla mahallesi şehit mustafa erciges caddesi no,91/b
+                            06220 Keçiören
+                            Türkiye
                         </p>
                         <br/>
-                        <p style={{color:"#000"}}>
-                            Telefon Numarası: (0312) 322 67 17
+                        <p style={{color:"#fff"}}>
+                            Telefon Numarası: (0312) 378 37 00
                         </p>
                     </MDBCol>
                     <hr className="clearfix w-100 d-md-none" />
                     <MDBCol md="2">
-                        <h5 className="text-uppercase mb-4 mt-3 font-weight-bold">
+                        <h5 className="text-uppercase mb-4 mt-3 font-weight-bold" style={{color:"#fff"}}>
                             Ürünler
                         </h5>
                         <ul className="list-unstyled">
                             <li>
-                                <a href="#!">Bebek ve Çocuk Sağlığı</a>
+                                <a href="#!" style={{color:"#fff"}}>Kavrulmuş Kuruyemişler</a>
                             </li>
                             <li>
-                                <a href="#!">Kozmetik</a>
+                                <a href="#!" style={{color:"#fff"}}>Çig Kuruyemişler</a>
                             </li>
                             <li>
-                                <a href="#!">Bitkisel Ürünler</a>
-                            </li>
-                        </ul>
-                    </MDBCol>
-                    <hr className="clearfix w-100 d-md-none" />
-                    <MDBCol md="2">
-                        <h5 className="text-uppercase mb-4 mt-3 font-weight-bold">
-                            Popüler Markalar
-                        </h5>
-                        <ul className="list-unstyled">
-                            <li>
-                                <a href="#!">Afye</a>
+                                <a href="#!" style={{color:"#fff"}}>Kahveler</a>
                             </li>
                             <li>
-                                <a href="#!">Zinc</a>
-                            </li>
-                        </ul>
-                    </MDBCol>
-                    <hr className="clearfix w-100 d-md-none" />
-                    <MDBCol md="2">
-                        <h5 className="text-uppercase mb-4 mt-3 font-weight-bold">
-
-                        </h5>
-                        <ul className="list-unstyled">
-                            <li>
-                                <a href="#!">Aura Cacia</a>
-                            </li>
-                            <li>
-                                <a href="#!">Nature's Bounty</a>
-                            </li>
-                            <li>
-                                <a href="#!">Sport Aid</a>
-                            </li>
-                            <li>
-                                <a href="#!">View All</a>
+                                <a href="#!" style={{color:"#fff"}} >Şekerlemeler</a>
                             </li>
                         </ul>
                     </MDBCol>

@@ -10,7 +10,7 @@ import {makeStyles, withStyles} from '@material-ui/core/styles';
 import PersonIcon from '@material-ui/icons/Person';
 import {Form, Image, Menu, Modal} from "semantic-ui-react";
 
-import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import TableContainer from "@material-ui/core/TableContainer";
 import Table from "@material-ui/core/Table";
 import TableHead from "@material-ui/core/TableHead";
@@ -133,7 +133,7 @@ export default function ShoppingCartMenu() {
         });
 
     }
-
+    debugger;
 
 
 
@@ -145,14 +145,11 @@ export default function ShoppingCartMenu() {
 
         prevOpen.current = open;
     }, [open]);
-   debugger;
     return (
         <div className={classes.root} style={{float:"left",borderRadius:"1000px"}}>
             <div style={{float:"left"}}>
+                <ShoppingCartOutlinedIcon style={{fontSize:"2.5rem",float:"left",marginRight:"15px"}} ref={anchorRef} aria-controls={open ? 'menu-list-grow' : undefined} aria-haspopup="true" onClick={handleToggle} />
 
-                <Button ref={anchorRef} aria-controls={open ? 'menu-list-grow' : undefined} aria-haspopup="true" onClick={handleToggle} style={{float:"left",borderRadius:"1000px"}}>
-                <ShoppingCartIcon style={{fontSize:"2.5rem",float:"left",color:"#66a7fd"}}/>
-                </Button>
                 <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
                     {({ TransitionProps, placement }) => (
                         <Grow
@@ -161,7 +158,7 @@ export default function ShoppingCartMenu() {
                         >
                             <Paper>
                                 <ClickAwayListener onClickAway={handleClose}>
-                                        {(cart !=="{}")?(
+                                        {(currentProducts2.length>0)?(
                                             <div>
                                                 <TableContainer>
                                                     <Table  aria-label="customized table" >

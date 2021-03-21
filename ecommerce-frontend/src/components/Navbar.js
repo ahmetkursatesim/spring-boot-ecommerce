@@ -3,10 +3,6 @@ import React, { useContext, useState } from "react";
 import { Menu } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import Context from "../config/context";
-import AddProductForm from "./AddProductForm";
-import context from "../config/context";
-
-
 
 export default function Navbar() {
   const context = useContext(Context);
@@ -16,28 +12,25 @@ export default function Navbar() {
 
   const handleItemClick = (e, { name }) => setActiveItem(name);
   const addProp = user ? user.admin ? (
-          <Menu pointing secondary size="massive" color="teal">
-              <Menu.Item name="AnaSayfa" active={activeItem === "AnaSayfa"} onClick={handleItemClick} as={Link} to="/"/>
+          <Menu pointing secondary size="massive" color="teal"  style={{marginLeft:"20%"}}>
               <Menu.Item name="Ürünler" active={activeItem === "Ürünler"} onClick={handleItemClick} as={Link} to="/products"/>
               <Menu.Item name="Siparişler" active={activeItem === "Siparişler"} onClick={handleItemClick} as={Link} to="/orders"/>
           </Menu>
 
   ): (
-      <Menu pointing secondary size="massive" color="teal">
-          <Menu.Item name="AnaSayfa" active={activeItem === "AnaSayfa"} onClick={handleItemClick} as={Link} to="/"/>
+      <Menu pointing secondary size="massive" color="teal"  >
           <Menu.Item name="Siparişlerim" active={activeItem === "Siparişlerim"} onClick={handleItemClick} as={Link} to="/orders"/>
           <Menu.Item name="Sepetim" active={activeItem === "Sepetim"} onClick={handleItemClick} as={Link} to="/shoppingcart"/>
       </Menu>
   ) : (
-      <Menu pointing secondary size="massive" color="teal">
-          <Menu.Item name="AnaSayfa" active={activeItem === "AnaSayfa"} onClick={handleItemClick} as={Link} to="/"/>
+      <Menu pointing secondary size="massive" color="teal" style={{backgroundColor:"white"}}>
           <Menu.Item name="Üye Ol" active={activeItem === "Üye Ol"} onClick={handleItemClick} as={Link} to="/signin"/>
       </Menu>
 
 
   )
   const menuBar = (
-      <div style={{backgroundColor:"#d0e2f7",display:"flex",margin:"auto"}}>
+      <div style={{display:"flex",margin:"auto"}}>
           {addProp}
       </div>
   );

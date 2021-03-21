@@ -1,10 +1,10 @@
 import React, { useContext, useState } from "react";
 
 import "semantic-ui-css/semantic.min.css";
-import { Card, Header, Form, Button } from "semantic-ui-react";
+import {Card, Header, Form, Button, Menu} from "semantic-ui-react";
 
 import Context from "../config/context";
-import { Redirect } from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 
 export default function Login() {
   const context = useContext(Context);
@@ -25,7 +25,22 @@ export default function Login() {
 
     getUser(user);
   };
-  debugger;
+
+
+  function signIn(){
+    window.location.href="/signin"
+  }
+
+
+  function rootHeight(){
+    var e = document.getElementById("root");
+    var t = document.getElementById("backgroundImageTemp");
+    if(e.clientHeight>0){
+      t.style.height=e.clientHeight-15+"px";
+    }
+
+  }
+  rootHeight()
   const view = user ? (
     <Redirect to="/" />
   ) : (
@@ -53,10 +68,14 @@ export default function Login() {
               <Button color="teal" fluid type="submit">
                 Login
               </Button>
+              <Button color="teal" fluid onClick={signIn} style={{marginTop:"25px"}}>
+                Üye Ol
+              </Button>
             </Form>
           </Card.Content>
-        </Card>
 
+
+        </Card>
       </div>
 
   );

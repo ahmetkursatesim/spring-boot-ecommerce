@@ -1,7 +1,5 @@
 package com.Kursat.springbootecommerce.model;
 
-import com.mysql.cj.jdbc.Blob;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -27,7 +25,7 @@ public class Product {
 	@Column(name = "piece")
 	private Integer piece;
 	@Column(name = "price", nullable = false)
-	private double price;
+	private float price;
 	@Column(name = "picture1")
 	private String picture1;
 	@Column(name = "p_code")
@@ -41,10 +39,11 @@ public class Product {
 
 	@ManyToOne
 	private Category category;
+
 	@ManyToMany(mappedBy = "productsMasters")
 	private List<OrderMaster> orders;
 
-	public Product(Integer id, String name, String description, Integer piece, double price, String picture1, String p_code, String manufacturer_name, Integer created_user_Id, Integer updated_user_Id, Category category, List<OrderMaster> orders) {
+	public Product(Integer id, String name, String description, Integer piece, float price, String picture1, String p_code, String manufacturer_name, Integer created_user_Id, Integer updated_user_Id, Category category, List<OrderMaster> orders) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
@@ -96,11 +95,11 @@ public class Product {
 		this.piece = piece;
 	}
 
-	public double getPrice() {
+	public float getPrice() {
 		return price;
 	}
 
-	public void setPrice(double price) {
+	public void setPrice(float price) {
 		this.price = price;
 	}
 
@@ -159,4 +158,5 @@ public class Product {
 	public void setOrders(List<OrderMaster> orders) {
 		this.orders = orders;
 	}
+
 }

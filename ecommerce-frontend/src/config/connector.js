@@ -19,7 +19,7 @@ import {
   POST_CATEGORY,
   POST_PRODUCTS,
   POST_FILE, POST_CART,
-  POST_WISH, POST_ORDERS,GET_ORDERS
+  POST_WISH, POST_ORDERS,GET_ORDERS,POST_PRODUCT,POST_FILTERED_PRODUCT
 } from "./values";
 
 const Context = props => {
@@ -30,7 +30,9 @@ const Context = props => {
     categories: [],
     cart:[],
     wish:[],
-    orders:[]
+    orders:[],
+    product:null,
+    searchedProducts: []
   };
   let initialState = localStorage.getItem('user') ? (
       {
@@ -40,7 +42,9 @@ const Context = props => {
         categories: [],
         cart:localStorage.getItem('cart') ? localStorage.getItem('cart'):[],
         wish:localStorage.getItem('wish') ? localStorage.getItem('wish'):[],
-        orders:[]
+        orders:[],
+        product:null,
+        searchedProducts:[]
       }
   ): ({
     user: null,
@@ -49,7 +53,9 @@ const Context = props => {
     categories: [],
     cart:localStorage.getItem('cart') ? localStorage.getItem('cart'):[],
     wish:localStorage.getItem('wish') ? localStorage.getItem('wish'):[],
-    orders:[]
+    orders:[],
+    product:null,
+    searchedProducts:[]
 
   });
   const [state, dispatch] = useReducer(Reducer, initialState);
@@ -91,6 +97,27 @@ const Context = props => {
       payload: JSON.stringify(tmpCart2)
      });
   }
+  async function submitCart(cart,count){
+    var tmpCart2={}
+    if(localStorage.hasOwnProperty("cart")){
+      tmpCart2=JSON.parse(localStorage.getItem("cart"))
+    }
+    if(!tmpCart2.hasOwnProperty(cart.id)){
+      tmpCart2[cart.id]=[cart,count]
+
+    }else{
+      tmpCart2[cart.id]=[cart,parseInt(tmpCart2[cart.id][1])+count]
+    }
+    localStorage.setItem("cart",JSON.stringify(tmpCart2))
+    dispatch({
+      type: POST_CART,
+      payload: JSON.stringify(tmpCart2)
+    });
+  }
+
+
+
+
   async function removeCart(cart){
     var tmpCart2={}
     if(localStorage.hasOwnProperty("cart")){
@@ -175,26 +202,26 @@ const Context = props => {
     });
   };
 
-
-
-  async function uploadFile(file){
+  async function uploadProfilePhoto(file,user) {
     const file2 = new Blob([file], {type: 'text/plain'});
     var formData = new FormData();
     formData.append("file", file2);
-    var pathCloud=await axiosClient.post("/file/upload",formData , {headers: {'Content-Type': 'multipart/form-data'}})
-    return  pathCloud
-
-  }
-  const uploadProfilePhoto=async user => {
-    const res = await axiosClient.post("/users/updatephoto", user);
+    formData.append("user",JSON.stringify(user))
+    const res=await axiosClient.post("/users/updatephoto",formData , {headers: {'Content-Type': 'multipart/form-data'}})
     localStorage.setItem("user", JSON.stringify(res.data));
     dispatch({
       type: POST_USER,
       payload: res.data
     });
   };
-  const addProduct = async product => {
-    const res = await axiosClient.post("/products/add", product);
+  async function addProduct(file,product) {
+
+    var formData = new FormData();
+    const file2 = new Blob([file], {type: 'text/plain'});
+    formData.append("file", file2);
+    formData.append("product", JSON.stringify(product));
+    debugger;
+    const res = await axiosClient.post("/products/add",formData , {headers: {'Content-Type': 'multipart/form-data'}})
     dispatch({
       type: POST_PRODUCTS,
       payload: res.data
@@ -210,8 +237,12 @@ const Context = props => {
     });
   };
 
-  const editProduct = async product => {
-    const res = await axiosClient.post("/products/edit", product);
+  async function editProduct (product,file){
+    var formData = new FormData();
+    const file2 = new Blob([file], {type: 'text/plain'});
+    formData.append("file", file2);
+    formData.append("product", JSON.stringify(product));
+    const res = await axiosClient.post("/products/edit",formData , {headers: {'Content-Type': 'multipart/form-data'}})
     dispatch({
       type: POST_PRODUCTS,
       payload: res.data
@@ -260,6 +291,24 @@ const Context = props => {
       payload: res.data
     });
   };
+  async function getFilteredProductList(par1,par2){
+    var tmp=par1+"&"+par2;
+    const res = await axiosClient.get("/products/getFilteredList/"+tmp);
+    dispatch({
+      type: POST_FILTERED_PRODUCT,
+      payload: res.data
+    });
+
+  }
+  async function getFilteredProductSearchList(par1,par2){
+    var tmp=par1+"&"+par2;
+    const res = await axiosClient.get("/products/getFilteredSearchList/"+tmp);
+    dispatch({
+      type: POST_FILTERED_PRODUCT,
+      payload: res.data
+    });
+
+  }
   async function getProducts(id){
     const res = await axiosClient.get("/products/all/"+id);
     dispatch({
@@ -268,6 +317,17 @@ const Context = props => {
     });
 
   }
+
+
+  async function getProductWithId(id){
+    const res = await axiosClient.get("/products/get/"+id);
+    dispatch({
+      type: POST_PRODUCT,
+      payload: res.data
+    });
+
+  }
+
   async function updateOrderStatus(order_id,user_id,status){
     const res = await axiosClient.post("/ordermaster/updateorderstatus/"+order_id+"/"+status+"/"+user_id);
     debugger;
@@ -296,6 +356,8 @@ const Context = props => {
         cart:state.cart,
         orders:state.orders,
         wish:state.wish,
+        product:state.product,
+        searchedProducts:state.searchedProducts,
         addUser,
         addCategory,
         addProduct,
@@ -303,7 +365,6 @@ const Context = props => {
         getCategories,
         getProducts,
         getCurrency,
-        uploadFile,
         uploadProfilePhoto,
         editProduct,
         addCart,
@@ -313,7 +374,10 @@ const Context = props => {
         addOrder,getOrders,
         updateOrderStatus,
         changeAdress,
-        removeInstantlyWish
+        removeInstantlyWish,
+        getProductWithId,submitCart,
+        getFilteredProductList,
+        getFilteredProductSearchList
       }}
     >
       {props.children}

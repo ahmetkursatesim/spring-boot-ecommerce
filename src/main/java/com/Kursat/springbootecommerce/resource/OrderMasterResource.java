@@ -80,7 +80,7 @@ public class OrderMasterResource {
         ArrayList<Product> model2 = new ArrayList<Product>();
         for(ProductEx ex : orderMasterEx.getProductsMasters()){
             for(int i=0;i<ex.getOrderQuantity();i++){
-                Product a=new Product(ex.getId(),ex.getName(),ex.getDescription(),ex.getPiece(),ex.getPrice(),ex.getPicture1(),ex.getP_code(),ex.getManufacturer_name(),ex.getCreated_user_Id(), ex.getUpdated_user_Id(),ex.getCategory(),null);
+                Product a=  new Product(ex.getId(),ex.getName(),ex.getDescription(),ex.getPiece(),ex.getPrice(),ex.getPicture1(),ex.getP_code(),ex.getManufacturer_name(),ex.getCreated_user_Id(), ex.getUpdated_user_Id(),ex.getCategory(),null);
                 model2.add(a);
 
             }

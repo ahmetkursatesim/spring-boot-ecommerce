@@ -1,56 +1,15 @@
 import React, {useContext, useEffect, useState} from "react";
 import "../main.css"
-import { withStyles, makeStyles } from '@material-ui/core/styles';
-import TableContainer from "@material-ui/core/TableContainer";
-import Paper from "@material-ui/core/Paper";
-import Table from "@material-ui/core/Table";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import TableBody from "@material-ui/core/TableBody";
 import {Button, Form, Image, Modal} from "semantic-ui-react";
-import {IconButton} from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
-import DeleteIcon from "@material-ui/icons/Delete";
-import TablePagination from "@material-ui/core/TablePagination";
 import Context from "../config/context";
-import TableCell from "@material-ui/core/TableCell";
 import {store} from "react-notifications-component";
-const StyledTableCell = withStyles((theme) => ({
-    head: {
-        backgroundColor: "#66a7fd",
-        color: theme.palette.common.white,
-    },
-    body: {
-        fontSize: 14,
-    },
-}))(TableCell);
-
-const StyledTableRow = withStyles((theme) => ({
-    root: {
-        '&:nth-of-type(odd)': {
-            backgroundColor: theme.palette.action.hover,
-        },
-    },
-}))(TableRow);
-
-let rows = [];
-
-const useStyles = makeStyles({
-    root: {
-        width: '100%',
-    },
-    container: {
-        maxHeight: 440,
-    },
-});
 
 export default function ShoppingCart() {
     const context = useContext(Context);
     const { user,addCart,cart,removeCart,removeInstantlyCart,addOrder } = context;
-    const [currentPage, setCurrentPage] = useState(1);
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(3);
+    /*const [page, setPage] = React.useState(0);
     const handleSubmit = () => {
         let resultCartList=[]
         if(localStorage.hasOwnProperty("cart")){
@@ -74,7 +33,7 @@ export default function ShoppingCart() {
         };
         addOrder(order);
         localStorage.removeItem("cart")
-    };
+    };*/
 
     function HandleShoppingCart(productRow){
         addCart(productRow)
@@ -139,8 +98,6 @@ export default function ShoppingCart() {
         return totalPrice
 
     }
-
-
     function getrowTotalPrice(rowTmp){
         let totalrowPrice=0.0
         if(localStorage.hasOwnProperty("cart")){
@@ -151,12 +108,7 @@ export default function ShoppingCart() {
         return totalrowPrice
 
     }
-    const Totalprice=getTotalPrice()
-    const handleChangePage = (event, newPage) => {
-        setPage(newPage);
-    };
     let cartList=[]
-
     if(localStorage.hasOwnProperty("cart")){
         var temp=JSON.parse(cart)
         for (var key in Object.keys(temp)) {
@@ -164,123 +116,170 @@ export default function ShoppingCart() {
         }
 
     }
-
-    const indexOfLastProduct2 = (page+1) * rowsPerPage;
-    const indexOfFirstProduct2= indexOfLastProduct2- rowsPerPage;
-    const currentProducts2 = cartList.slice(
-        indexOfFirstProduct2,
-        indexOfLastProduct2
-    );
-
-    const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
-        setPage(0);
-    };
-
-
+    function redirectPayPage() {
+        window.location.href = "/PayPage";
+    }
+    function rootHeight(){
+        var e = document.getElementById("root");
+        var t = document.getElementById("backgroundImageTemp");
+        if(e.clientHeight>0){
+            t.style.height=e.clientHeight-15+"px";
+        }
+    }
+    rootHeight()
     return (
-        cart.length>0?(
-            <div   style={{width:"100%",marginLeft:"0",marginRight:"0" ,minHeight:"550px",marginTop:"50px"}}>
-                <TableContainer component={Paper} >
-                    <Table  aria-label="customized table" >
-                        <TableHead>
-                            <TableRow>
-                                <StyledTableCell align="center">Ürün Resmi</StyledTableCell>
-                                <StyledTableCell  align="center">Ürün Adı</StyledTableCell>
-                                <StyledTableCell  align="center">Fiyatı</StyledTableCell>
-                                <StyledTableCell align="center" >Ürün Adeti</StyledTableCell>
-                                <StyledTableCell align="center" >Toplam</StyledTableCell>
-                                <StyledTableCell align="center" ></StyledTableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {currentProducts2.map((row) => (
-                                <StyledTableRow key={row.picture1}>
-                                    <StyledTableCell align="center">{
-                                        <Image src={row.picture1}  style={{width: 50, height:50,borderRadius:100/2,display:"inline"}}>
-                                        </Image>
-                                    }</StyledTableCell>
-                                    <StyledTableCell  align="center">{row.name}</StyledTableCell>
-                                    <StyledTableCell  align="center" >{row.price}</StyledTableCell>
-                                    <StyledTableCell align="center">{
-                                        <div >
-                                            <center>
-                                                <IconButton type="button" color="primary" aria-label="upload picture" component="span" onClick={()=>{HandleShoppingCart(row)}} >
-                                                    <AddIcon style={{fontSize:"2rem"}}/>
-                                                </IconButton>
-                                                <div >
-                                                    {JSON.parse(cart)[row.id][1]}
+        cartList.length>0?(
+            <div   style={{width:"75%",marginLeft:"10%",marginRight:"10%" ,minHeight:"550px",marginTop:"200px"}}>
+                <section class="col-12">
+                    <div id="cart-container" >
+                        <div id="cart-container" >
+                            <div class="row">
+                               <div className="col-12 col-lg-9 col-md-8">
+                            <div id="cart-content" className="cart-block">
+                                <div className="contentbox-header">
+                                    <h4>SEPET DETAYI</h4>
+                                </div>
+                                <div className="contentbox-body">
+                                    <div id="cart-items">
+                                        {cartList.map((row) => (
+                                            <div className="cart-item">
+                                                <div className="row">
+                                                    <div className="col-4 col-lg-2">
+                                                        <div className="cart-item-image">
+                                                            <a target="_blank" >
+                                                                <img src={row.picture1} />
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-8 col-lg-10 pl-0">
+                                                        <div className="cart-item-detail">
+                                                            <div className="row">
+                                                                <div className="col-12 col-lg-5">
+                                                                    <div className="cart-item-name">
+                                                                        <div style={{paddingLeft:"30px"}}>
+                                                                            <a  style={{fontSize:"2rem"}}>
+                                                                                {row.name}
+                                                                            </a>
+                                                                        </div>
+
+                                                                        <Button className="cart-list-item-delete"  style={{background:"aliceblue",fontSize:"2rem"}} onClick={()=>removeInstantlyCart(row)}>
+                                                                            <i className="far fa-trash-alt"></i>
+                                                                            <span style={{marginLeft:"5px"}}>Sepetten Sil</span>
+                                                                        </Button>
+                                                                    </div>
+                                                                </div>
+                                                                <div className="col-6 col-lg-4">
+
+                                                                        <div style={{marginTop:"50px"}}>
+                                                                            <button type="button" class="increaseDecreaseCartItem" aria-label="upload picture" component="span"  onClick={()=>{HandleRemoveShoppingCart(row)}} style={{float:"left"}}>
+                                                                                <i className="fas fa-minus"></i>
+                                                                            </button>
+                                                                            <div style={{float:"left",fontSize:"1.5rem",marginTop:"10px",marginLeft:"10px",marginRight:"10px"}}>
+                                                                                <center>
+                                                                                    {JSON.parse(cart)[row.id][1]}
+                                                                                    &nbsp;&nbsp;
+                                                                                    <span className="product-quantity-name">Adet</span>
+                                                                                </center>
+
+                                                                            </div>
+                                                                            <button type="button" class="increaseDecreaseCartItem" aria-label="upload picture" component="span" onClick={()=>{HandleShoppingCart(row)}} >
+                                                                                <i className="fas fa-plus"></i>
+                                                                            </button>
+                                                                        </div>
+                                                                </div>
+                                                                <div className="col-6 col-lg-3">
+                                                                    <div className="cart-item-price-container">
+                                                                        <div className="cart-item-price">
+                                                                            <div className="item-rebate-price">{getrowTotalPrice(row)} TL</div>
+                                                                            <div className="item-tax">+ KDV % 8</div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
+                                                <button className="cart-item-delete-mobile btn btn-xs" data-id="132692"
+                                                        data-selector="delete-cart-item"><i className="fas fa-times"></i></button>
+                                            </div>
 
-                                                <IconButton type="button" color="primary" aria-label="upload picture" component="span"  onClick={()=>{HandleRemoveShoppingCart(row)}}>
-                                                    <RemoveIcon style={{fontSize:"2rem"}}/>
-                                                </IconButton>
-                                            </center>
+                                        ))}
+                                    </div>
+                                    <div className="cart-buttons">
+                                        <button className="btn btn-sm btn-secondary" data-selector="return-back">
+                                            <i className="fas fa-arrow-left"></i>
+                                            <span>ALIŞVERİŞE DEVAM ET</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                                <div className="col-12 col-lg-3 col-md-4 pl-md-0">
+                                    <div id="checkout-aside-fixed">
+                                        <div id="cart-panel" className="cart-block">
+                                            <div className="contentbox-header">
+                                                <h4>SEPET ÖZETİ</h4>
+                                            </div>
+                                            <div className="contentbox-body">
+                                                <div id="cart-summary">
+                                                    <div className="cart-panel-amount-details">
+                                                        <div className="cart-panel-row">
+                                                            <span>Ara Toplam</span>
+                                                            <span>{getTotalPrice()} TL</span>
+                                                        </div>
+                                                        <div className="cart-panel-row">
+                                                            <span>KDV</span>
+                                                            <span>{getTotalPrice()*8/100}TL</span>
+                                                        </div>
+                                                        <div className="cart-panel-row">
+                                                            <span>KDV Dahil</span>
+                                                            <span>{getTotalPrice()+getTotalPrice()*8/100} TL</span>
+                                                        </div>
+                                                        <div className="cart-panel-row cart-summary-total-price">
+                                                            <span>Toplam</span>
+                                                            <span id="cart-total-amount" data-general-amount="0,00" data-final-amount="24,90">
+                                                               {getTotalPrice()+getTotalPrice()*8/100} TL
+                                                            </span>
+                                                        </div>
 
+                                                    </div>
+                                                    <div className="cart-panel-buttons form-group">
 
+                                                        {user ?(
+                                                            <Form >
+                                                                <Button  className="btn btn-block btn-primary" style={{float:"right",marginTop:"2%",marginRight:"0px"}} onClick={redirectPayPage}> Alışverişi Tamamla </Button>
+                                                            </Form>
+                                                        ):(
+                                                            <div >
+
+                                                            </div>
+                                                        )
+
+                                                        }
+
+                                                    </div>
+                                                    <div className="cart-panel-secure-logo">
+                                                        <img
+                                                            src="sslsecure.png"
+                                                            data-toggle="tooltip" data-placement="bottom" title=""
+                                                            alt="Bu sitede yapacağınız alışveriş işlemleri 256bit SSL ile korunmaktadır"
+                                                            data-original-title="Bu sitede yapacağınız alışveriş işlemleri 256bit SSL ile korunmaktadır"/>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-
-
-                                    }</StyledTableCell>
-                                    <StyledTableCell align="center">{
-                                        getrowTotalPrice(row)
-                                    }</StyledTableCell>
-                                    <StyledTableCell align="center">{
-                                        <IconButton type="button" color="primary" aria-label="upload picture" component="span" onClick={()=>{HandleRemoveInstantlyCart(row)}} >
-                                            <DeleteIcon style={{fontSize:"2rem"}}/>
-                                        </IconButton>
-                                    }</StyledTableCell>
-                                </StyledTableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                    <TablePagination
-                        rowsPerPageOptions={[3, 5, 16]}
-                        component="div"
-                        count={cartList.length}
-                        rowsPerPage={rowsPerPage}
-                        page={page}
-                        onChangePage={handleChangePage}
-                        onChangeRowsPerPage={handleChangeRowsPerPage}
-                    />
-                </TableContainer>
-
-                <br/>
-                <center>
-                    <header> <strong>  Sepet Toplamı  </strong>  </header>
-
-                </center>
-
-                <br/>
-                <div style={{width:"100%",backgroundColor:"#66a7fd",height:"40px",borderRadius:1000}}>
-
-                    <strong style={{marginLeft:"1%",float:"left",marginTop:"0.5%"}}>Sepet Toplamı</strong>
-
-                    <div style={{marginLeft:"42%",display:"flex",marginTop:"0.5%",float:"left"}}>
-                        <strong>Ürün Sayısı:{cartList.length}</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div style={{float:"right",marginTop:"0.5%",marginRight:"1%"}}>
-                        <strong >Fiyat Toplamı:{Totalprice} TL </strong>
-                    </div>
+                </section>
 
-
-
-                </div>
-                <br/>
-                {user ?(  <Form onSubmit={handleSubmit}>
-                    <Button  primary style={{float:"right",marginTop:"2%",marginRight:"0px"}}> Ödeme Sayfası </Button>
-                </Form>):(
-                    <div>
-                        <div> Sepetinizde Ürün Bulunmamaktadır</div>
-                    </div>
-                )
-
-                }
 
 
             </div>
         ):(
-            <div style={{marginTop:"125px",minHeight:"475px"}}><h1>
+            <div style={{marginTop:"250px",minHeight:"875px"}}><h1>
 
                 Sepetinizde Ürün Bulunmamaktadır
 

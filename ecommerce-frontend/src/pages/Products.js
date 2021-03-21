@@ -10,8 +10,6 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
-import Product from "../components/Product";
-import Pagination from "../components/Pagination";
 import AddProductForm from "../components/AddProductForm";
 import Context from "../config/context";
 import  "../stylesheet.css"
@@ -87,9 +85,17 @@ export default function Products() {
         setPage(0);
   };
 
+    function rootHeight(){
+        var e = document.getElementById("root");
+        var t = document.getElementById("backgroundImageTemp");
+        if(e.clientHeight>0){
+            t.style.height=e.clientHeight-15+"px";
+        }
 
+    }
+    rootHeight()
   return (
-      <div style={{width:"100%",marginLeft:"0",marginRight:"0",marginTop:"125px",minHeight:"750px"}}>
+      <div style={{width:"100%",marginLeft:"0",marginRight:"0",marginTop:"200px",minHeight:"750px"}}>
           <TableContainer component={Paper}>
               {add}
               <Table className={classes.table} aria-label="customized table">

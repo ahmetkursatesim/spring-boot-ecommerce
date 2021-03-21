@@ -153,10 +153,7 @@ export default function ShoppingCartMenu() {
     return (
         <div className={classes.root} style={{float:"left",borderRadius:"1000px"}}>
             <div style={{float:"left"}}>
-
-                <Button ref={anchorRef} aria-controls={open ? 'menu-list-grow' : undefined} aria-haspopup="true" onClick={handleToggle} style={{float:"left",borderRadius:"1000px"}}>
-                    <FavoriteBorderIcon style={{fontSize:"2.5rem",float:"left",color:"#66a7fd"}}/>
-                </Button>
+                    <FavoriteBorderIcon style={{fontSize:"2.5rem",float:"left",marginRight:"15px"}} ref={anchorRef} aria-controls={open ? 'menu-list-grow' : undefined} aria-haspopup="true" onClick={handleToggle}/>
                 <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
                     {({ TransitionProps, placement }) => (
                         <Grow

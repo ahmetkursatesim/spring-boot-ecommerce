@@ -25,7 +25,7 @@ const colorBtn={
 }
 export default function Detail(props) {
     const context = useContext(Context);
-
+    debugger;
     var cv=props.product
     return (
         <Modal trigger={

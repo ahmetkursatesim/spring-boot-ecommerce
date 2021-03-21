@@ -2,42 +2,17 @@ package com.Kursat.springbootecommerce.ExModel;
 
 import com.Kursat.springbootecommerce.model.Category;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
 public class ProductEx {
     private Integer id;
     private String name;
     private String description;
     private Integer piece;
-    private double price;
+    private float price;
     private String picture1;
     private String p_code;
     private String manufacturer_name;
     private Integer created_user_Id;
     private Integer updated_user_Id;
-    private Category category;
-    private Integer OrderQuantity;
-
-    public ProductEx() {
-    }
-
-    public ProductEx(Integer id, String name, String description, Integer piece, double price, String picture1, String p_code, String manufacturer_name, Integer created_user_Id, Integer updated_user_Id, Category category, Integer orderQuantity) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.piece = piece;
-        this.price = price;
-        this.picture1 = picture1;
-        this.p_code = p_code;
-        this.manufacturer_name = manufacturer_name;
-        this.created_user_Id = created_user_Id;
-        this.updated_user_Id = updated_user_Id;
-        this.category = category;
-        OrderQuantity = orderQuantity;
-    }
 
     public Integer getId() {
         return id;
@@ -71,11 +46,11 @@ public class ProductEx {
         this.piece = piece;
     }
 
-    public double getPrice() {
+    public float getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(float price) {
         this.price = price;
     }
 
@@ -94,6 +69,7 @@ public class ProductEx {
     public void setP_code(String p_code) {
         this.p_code = p_code;
     }
+
 
     public String getManufacturer_name() {
         return manufacturer_name;
@@ -132,6 +108,26 @@ public class ProductEx {
     }
 
     public void setOrderQuantity(Integer orderQuantity) {
+        OrderQuantity = orderQuantity;
+    }
+
+    private Category category;
+    private Integer OrderQuantity;
+    public ProductEx() {
+    }
+
+    public ProductEx(Integer id, String name, String description, Integer piece, float price, String picture1, String p_code, String manufacturer_name, Integer created_user_Id, Integer updated_user_Id, Category category, Integer orderQuantity) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.piece = piece;
+        this.price = price;
+        this.picture1 = picture1;
+        this.p_code = p_code;
+        this.manufacturer_name = manufacturer_name;
+        this.created_user_Id = created_user_Id;
+        this.updated_user_Id = updated_user_Id;
+        this.category = category;
         OrderQuantity = orderQuantity;
     }
 }

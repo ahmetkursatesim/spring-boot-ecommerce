@@ -9,6 +9,7 @@ import Slider from '@material-ui/core/Slider'
 import Typography from '@material-ui/core/Typography'
 import { getOrientation } from 'get-orientation/browser'
 import "../../main.css"
+import "../sepet.css"
 import { getCroppedImg, getRotatedImage } from '../Image/canvasUtils'
 function readFile(file) {
     return new Promise(resolve => {
@@ -19,7 +20,7 @@ function readFile(file) {
 }
 export default  function ChangePhoto(props) {
     const context = useContext(Context);
-    const {uploadFile,uploadProfilePhoto} = context;
+    const {uploadProfilePhoto} = context;
     const ORIENTATION_TO_ANGLE = {
         '3': 180,
         '6': 90,
@@ -50,39 +51,30 @@ export default  function ChangePhoto(props) {
 
     }
     const HandleProfilePhoto = async () => {
-        console.log("sdsdsdsdsd")
-        debugger;
         await CroppedImagesProfilePhoto();
     };
     async function CroppedImagesProfilePhoto() {
         const croppedProfilePhoto= await getCroppedImg(imageSrc, croppedAreaPixels, rotation)
-        let promiseUploadFile2 = new Promise(function (myResolve, myReject) {
-            let myUploadResult = uploadFile(croppedProfilePhoto)
-            myResolve(myUploadResult)
-        });
-        let resultProfilePhoto= await promiseUploadFile2
-        let pathImage = ""
-        if (resultProfilePhoto !== "") {
-            pathImage = resultProfilePhoto.data
-            console.log("sdsdsd")
-        }
-        debugger;
         let uploadProfilePromise=new Promise(function(myResolve, myReject) {
-            let userTmp=props.user;
-            userTmp.picture=process.env.PUBLIC_URL + '/generalfileStorage/'+ pathImage
-            let ad= uploadProfilePhoto(userTmp);
+            let userTmp=props.user
+            let ad=uploadProfilePhoto(croppedProfilePhoto,userTmp);
             myResolve(ad)
         });
         let result2= await uploadProfilePromise
     }
 
     return (
-        <Modal trigger={
-            <IconButton style={{backgroundColor: "#66a7fd", marginLeft: 5}}>
-                <EditIcon/>
-            </IconButton>
+        <Modal style={{height:window.innerHeight*0.75,overflowY:"scroll"}} trigger={
+            <div className="showcase" style={{width:"100px",borderRadius:"2rem",marginLeft:"100px"}}>
+                <div className="showcase-buttons" style={{width:"100px",marginTop:"10px"}}>
+                    <button style={{width:"100px",marginTop:"0px"}} class="showcase-add-to-cart" >
+                        Resim Degiştir
+                    </button>
+                </div>
+            </div>
+
         }>
-            <Modal.Header  style={{marginBottom:"300px"}}>Change Photo</Modal.Header>
+            <Modal.Header>Fotograf Degiştir</Modal.Header>
             <Modal.Content>
 
                 <div>
@@ -101,15 +93,14 @@ export default  function ChangePhoto(props) {
                                     onCropComplete={onCropComplete}
                                     onZoomChange={setZoom}
                                     cropShape={"round"}
-                                    style={{top:"10%!importtant"}}
+                                    style={{top:"50px !importtant"}}
                                 />
                             </div>
-                            <center>
+
                                 <div style={{width: "200px", height: "200px"}}>
 
                                 </div>
                                 <br/>
-                            </center>
                             <div className={{
                                 padding: 16,
                                 display: 'flex',
@@ -162,4 +153,4 @@ export default  function ChangePhoto(props) {
             </Modal.Content>
         </Modal>
     );
-};
+}

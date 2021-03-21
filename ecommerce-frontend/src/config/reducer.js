@@ -10,7 +10,9 @@ import {
     POST_CART,
     POST_WISH,
   POST_ORDERS,
-    GET_ORDERS
+    GET_ORDERS,
+    POST_PRODUCT,
+    POST_FILTERED_PRODUCT
 } from "./values";
 
 export default (state, action) => {
@@ -75,6 +77,16 @@ export default (state, action) => {
       return {
         ...state,
         orders: action.payload
+      };
+    case POST_PRODUCT:
+      return {
+        ...state,
+        product: action.payload
+      };
+    case POST_FILTERED_PRODUCT:
+      return {
+        ...state,
+        searchedProducts: action.payload
       };
 
     default:
